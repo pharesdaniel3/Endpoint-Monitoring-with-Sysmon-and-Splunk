@@ -1,0 +1,58 @@
+==============================
+Process Creation (Event ID 1)
+==============================
+
+index=endpoint EventID=1
+| table _time Image ParentImage CommandLine User
+
+==============================
+DNS Queries (Event ID 22)
+==============================
+
+index=endpoint EventID=22
+| table _time Image QueryName User
+
+==============================
+Registry Modifications (Event ID 13)
+==============================
+
+index=endpoint EventID=13
+
+==============================
+PowerShell Detection
+==============================
+
+index=endpoint EventID=1 Image="*powershell.exe"
+
+==============================
+Encoded PowerShell Detection
+==============================
+
+index=endpoint EventID=1 Image="*powershell.exe" CommandLine="*-enc*"
+
+==============================
+CMD Detection
+==============================
+
+index=endpoint EventID=1 Image="*cmd.exe"
+
+==============================
+Reconnaissance Activity
+==============================
+
+index=endpoint EventID=1
+(Image="*whoami.exe*" OR Image="*ipconfig.exe*" OR Image="*net.exe*")
+
+==============================
+LOLBins Detection
+==============================
+
+index=endpoint EventID=1
+(Image="*certutil.exe*" OR Image="*regsvr32.exe*" OR Image="*bitsadmin.exe*")
+
+==============================
+Event Distribution
+==============================
+
+index=endpoint
+| stats count by EventID
